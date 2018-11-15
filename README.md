@@ -7,8 +7,6 @@ Es una herramienta completa tanto para la investigación como la producción que
 #### Chatbot con ai y npl
 https://github.com/alfredfrancis/ai-chatbot-framework/  
 La herramienta ofrece una implementación rápida para la generación de una interfaz conversacional esto para facilitar la implantación, pero el problema encontrado es su difícil integración de un aprendizaje basado en documentos largos ya que los modelos que presenta evalúan textos cortos como las conversaciones de un chat.  
-
-
 ------------------------
 Los pasos o módulos sugeridos para el desarrollo son:
 ### Procesamiento de lenguaje natural  
@@ -16,20 +14,20 @@ Para realizar el proceso se tomo en cuenta las herramientas de freeling, spacy y
 ##### fastText
 FastText es una biblioteca de código abierto, gratuita y ligera que permite a los usuarios aprender representaciones de texto y clasificadores de texto. Funciona en hardware estándar, genérico. Más tarde, los modelos pueden reducirse de tamaño para adaptarse incluso a dispositivos móviles.  
 Para la instalación:  
-´$ git clone https://github.com/facebookresearch/fastText.git´
-´$ cd fastText´
-´$ make´
+`$ git clone https://github.com/facebookresearch/fastText.git`
+`$ cd fastText`
+`$ make`
 Para la prueba de palabras incrustadas de fastText  
-./fasttext skipgram -input data/fil9 -output result/fil9
+`./fasttext skipgram -input data/fil9 -output result/fil9`
 el resultado del entrenamiento no supervisado es el siguiente  
-´$ ls -l result
--rw-r-r-- 1 bojanowski 1876110778 978480850 Dec 20 11:01 fil9.bin
--rw-r-r-- 1 bojanowski 1876110778 190004182 Dec 20 11:01 fil9.vec´  
+`$ ls -l result`
+`-rw-r-r-- 1 bojanowski 1876110778 978480850 Dec 20 11:01 fil9.bin`
+`-rw-r-r-- 1 bojanowski 1876110778 190004182 Dec 20 11:01 fil9.vec`  
 Para evaluar palabras se entiende que hay 2 métodos 
-Para palabras sueltas
-´$ echo "leyes" | ./fasttext print-word-vectors result/fil9.bin´
+Para palabras sueltas  
+`$ echo "leyes" | ./fasttext print-word-vectors result/fil9.bin`
 Para palabras continuas
-´$ ./fasttext nn result/fil9.bin  
+`$ ./fasttext nn result/fil9.bin`  
 Pre-computing word vectors... done.´
 un ejemplo de salida es el siguiente
 ´Query word? asparagus´
