@@ -200,20 +200,87 @@ Esta tarea toma varias horas y como resultado obtendremos algunos archivos llama
   ...
   ]
 }´
+##### Spacy
+Esta librería de análisis de texto está más especializado en el desarrollo, así que la producción de aplicaciones es sencilla y la adecuada para este tipo de proyectos.  
+Para datos en español:
+import spacy
+from spacy.lang.es.examples import sentences
+nlp = spacy.load('es_core_news_sm')
+doc = nlp(sentences[0])
+print(doc.text)
+for token in doc:
+    print(token.text, token.pos_, token.dep_)
+
+Para la tokenización y el análisis semántico
+import spacy
+
+nlp = spacy.load('es_core_web_sm')
+doc = nlp(u'Texto a analizar')
+
+for token in doc:
+    print(token.text, token.lemma_, token.pos_, token.tag_, token.dep_,
+          token.shape_, token.is_alpha, token.is_stop)
+Para el módulo de reconocimiento de entidades nombradas
+
+import spacy
+
+nlp = spacy.load('es_core_web_sm')
+doc = nlp(u'Apple is looking at buying U.K. startup for $1 billion')
+
+for ent in doc.ents:
+    print(ent.text, ent.start_char, ent.end_char, ent.label_)
+
+Para la comparación de palabras 
+import spacy
+​
+nlp = spacy.load('en_core_web_md')  # make sure to use larger model!
+tokens = nlp(u'dog cat banana')
+​
+for token1 in tokens:
+   for token2 in tokens:
+       print(token1.text, token2.text, token1.similarity(token2))
+
 
 ### Generación de una estructura de datos para guardar datos semánticos obtenidos de un texto plano 
-Para la estructura de datos, se vio necesario tener un sistema de relaciones en las palabras de las oraciones 
+#### Relaciones Semánticas
+Para la estructura de datos, se vio necesario tener un sistema de relaciones en las palabras de las oraciones y la oraciones de los textos para una búsqueda simple y rápida.
+var oraciones = db._create("oraciones");
+var palabras = db._create("palabras");
+var relacionesPalOra = db._createEdgeCollection("relacionesPalOra");
+var relText = db._create("relText");
+var Texto = db._create("Texto");
+var CPE =Texto.save({_key: "CPE", title:'', creado:1999,tipo:''”})._id;
+var Bolivia =palabra.save({text,lema,pos,tag,dep,shape,alpha,stop})._id;
+var sentence1 = oraciones.save({text,lema,pos,tag})._id;
+relacionesPalOra.save(CPE, Bolivia, {roles: ["rol"]});
+ relText.save(sentece1, Bolivia, {roles: [""]});
+#### Palabras incrustadas o vectores de palabras.
+Se guardarán como archivos .bin o .vec de cada documento.
 ### Almacenamiento de los datos generados  
+Para el almacenamiento de datos generados por Spacy, freling o fastText
+En la parte de palabras incrustadas no es necesario una persistencia en la base de datos por que se guarda en archivos.
+Para los generados por relaciones semánticas es necesario convertir las relaciones en grafos semánticos para su almacenamiento mediante la librería grafeno https://github.com/agarsev/grafeno .
+Grafeno
+Biblioteca de Python para la extracción de gráficos conceptuales de texto, operación y linealización. Se proporciona un servicio web integrado.
+Esta biblioteca sigue siendo un trabajo en progreso, pero ya ha demostrado ser útil para varias aplicaciones, por ejemplo, el resumen de texto extractivo.
+Requerimientos
+python > = 3.4
+Los paquetes de Python para el uso de la biblioteca se enumeran en requirements.txt. Recomendamos utilizar conda para instalar grafeno y sus dependencias en un entorno virtual.
+Un analizador de dependencia. Por ahora, los siguientes son compatibles:
+spaCy (recomendado)
+freeling
+Si usa el simplenlglinealizador, un javaejecutable tendrá que estar disponible.
+También puede necesitar algunos datos NLTK, por ejemplo, 'wordnet' y 'wordnet_ic'. Se pueden descargar en python con:
+importar nltk
+nltk.download ([ ' wordnet ' , ' wordnet_ic ' ])
+
+
 ### Extractor de información en forma de resumen de texto 
 Para esta tarea se reviso el repositorio https://github.com/icoxfog417/awesome-text-summarization
  el cual explica el proceso de resumenes automaticos de texto, como tambien el siguiente repositorio https://github.com/facebookarchive/NAMAS. Como un apoyo a la documentacion el repositorio https://github.com/icoxfog417/awesome-text-summarization esmuy util.
 
 
-
-https://docs.arangodb.com/3.2/Cookbook/Graph/ExampleActorsAndMovies.html  
-https://github.com/laura-dietz/tutorial-kb4ir  
-https://eprints.ucm.es/48879/1/100.pdf  
-https://spacy.io/universe/?id=allennlp  
-https://allennlp.org/tutorials  
+Para mas informacion
+https://eprints.ucm.es/48879/1/100.pdf
 http://scielo.sld.cu/scielo.php?script=sci_arttext&pid=S2227-18992013000100007  
-https://github.com/d3/d3  
+
