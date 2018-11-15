@@ -16,33 +16,33 @@ Para realizar el proceso se tomo en cuenta las herramientas de freeling, spacy y
 ##### fastText
 FastText es una biblioteca de código abierto, gratuita y ligera que permite a los usuarios aprender representaciones de texto y clasificadores de texto. Funciona en hardware estándar, genérico. Más tarde, los modelos pueden reducirse de tamaño para adaptarse incluso a dispositivos móviles.  
 Para la instalación:  
-´$ git clone https://github.com/facebookresearch/fastText.git´
-´$ cd fastText´
-´$ make´
-Para la prueba de palabras incrustadas de fastText  
-./fasttext skipgram -input data/fil9 -output result/fil9
-el resultado del entrenamiento no supervisado es el siguiente  
-´$ ls -l result
--rw-r-r-- 1 bojanowski 1876110778 978480850 Dec 20 11:01 fil9.bin
--rw-r-r-- 1 bojanowski 1876110778 190004182 Dec 20 11:01 fil9.vec´  
-Para evaluar palabras se entiende que hay 2 métodos 
-Para palabras sueltas
-´$ echo "leyes" | ./fasttext print-word-vectors result/fil9.bin´
-Para palabras continuas
-´$ ./fasttext nn result/fil9.bin  
-Pre-computing word vectors... done.´
-un ejemplo de salida es el siguiente
-´Query word? asparagus´
-´beetroot 0.812384´
-´tomato 0.806688´
-´horseradish 0.805928´
-´spinach 0.801483´
-´licorice 0.791697´
-´lingonberries 0.781507´
-´asparagales 0.780756´
-´lingonberry 0.778534´
-´celery 0.774529´
-´beets 0.773984´
+´$ git clone https://github.com/facebookresearch/fastText.git´  
+´$ cd fastText´  
+´$ make´  
+Para la prueba de palabras incrustadas de fastText    
+./fasttext skipgram -input data/fil9 -output result/fil9  
+el resultado del entrenamiento no supervisado es el siguiente    
+´$ ls -l result  
+-rw-r-r-- 1 bojanowski 1876110778 978480850 Dec 20 11:01 fil9.bin  
+-rw-r-r-- 1 bojanowski 1876110778 190004182 Dec 20 11:01 fil9.vec´    
+Para evaluar palabras se entiende que hay 2 métodos   
+Para palabras sueltas  
+´$ echo "leyes" | ./fasttext print-word-vectors result/fil9.bin´  
+Para palabras continuas  
+´$ ./fasttext nn result/fil9.bin    
+Pre-computing word vectors... done.´  
+un ejemplo de salida es el siguiente  
+´Query word? asparagus´  
+´beetroot 0.812384´  
+´tomato 0.806688´  
+´horseradish 0.805928´  
+´spinach 0.801483´  
+´licorice 0.791697´  
+´lingonberries 0.781507´  
+´asparagales 0.780756´  
+´lingonberry 0.778534´  
+´celery 0.774529´  
+´beets 0.773984´  
 ### Generación de una estructura de datos para guardar datos semánticos obtenidos de un texto plano 
 Para la estructura de datos, se vio necesario tener un sistema de relaciones en las palabras de las oraciones 
 ### Almacenamiento de los datos generados  
