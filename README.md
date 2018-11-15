@@ -26,7 +26,7 @@ el resultado del entrenamiento no supervisado es el siguiente
 `-rw-r-r-- 1 bojanowski 1876110778 190004182 Dec 20 11:01 fil9.vec`  
 Para evaluar palabras se entiende que hay 2 métodos 
 Para palabras sueltas  
-`$ echo "leyes" | ./fasttext print-word-vectors result/fil9.bin`
+`$ echo "leyes" | ./fasttext print-word-vectors result/fil9.bin`  
 Para palabras continuas
 `$ ./fasttext nn result/fil9.bin`  
 `Pre-computing word vectors... done.`
@@ -57,13 +57,13 @@ Para probarlo, necesitamos conocer la ubicación de los archivos de configuraci�
 + En Debian: /usr/share/freeling/config/  
 
 Luego podemos ejecutar:  
-`$ export FREELINGSHARE=/usr/local/Cellar/freeling/4.0/share/freeling/`  
-`$ echo "Hola mundo" | analyzer -f /usr/local/Cellar/freeling/4.0/share/freeling/config/es.cfg`  
-`Hola hola I 1`  
-`mundo mundo NCMS000 1`  
+`$ export FREELINGSHARE=/usr/local/Cellar/freeling/4.0/share/freeling/`    
+`$ echo "Hola mundo" | analyzer -f /usr/local/Cellar/freeling/4.0/share/freeling/config/es.cfg`    
+`Hola hola I 1`    
+`mundo mundo NCMS000 1`    
 Y, como en este caso queremos el módulo nec de named entity classification, tendremos que correr:  
-`$ echo "Abuelas encontró al nieto número 114" | analyze -f \`  
-`/usr/local/Cellar/freeling/4.0/share/freeling/config/es.cfg --nec --output json`  
+`$ echo "Abuelas encontró al nieto número 114" | analyze -f \`    
+`/usr/local/Cellar/freeling/4.0/share/freeling/config/es.cfg --nec --output json`    
 
 
 Nuestro output será:  
@@ -142,20 +142,20 @@ Análisis de entidades
 Una vez que tenemos los workers listos podemos llamar a freeling con:  
 from pyfreeling import Analyzer  
 
-`def tokenize(data):  
-    try:  
-        analyzer = Analyzer(config='/usr/share/freeling/config/es-ar.cfg')  
-        tokens = []  
-        xml_root = analyzer.run(data['parsedText'].encode('utf-8'), 'nec')  
-        for element in xml_root.iter():  
-            if element.tag == 'token':  
-                tokens.append(dict(element.attrib))  
-    except Exception as e:  
-        print(data['idTramite'])  
-        print(e)  
+`def tokenize(data):`  
+`    try:  
+`        analyzer = Analyzer(config='/usr/share/freeling/config/es-ar.cfg')`  
+`        tokens = []`  
+`        xml_root = analyzer.run(data['parsedText'].encode('utf-8'), 'nec')`  
+`        for element in xml_root.iter():` 
+`            if element.tag == 'token':`  
+`                tokens.append(dict(element.attrib))`  
+`    except Exception as e:`  
+`        print(data['idTramite'])`  
+`        print(e)  `
 
-    return {'idTramite': data['idTramite'], 'tokens': tokens}  
-tokens = df.map(tokenize)`    
+`    return {'idTramite': data['idTramite'], 'tokens': tokens}`   
+`tokens = df.map(tokenize)`    
 
 
 Y luego bajamos todo a disco:  
@@ -192,17 +192,16 @@ Esta tarea toma varias horas y como resultado obtendremos algunos archivos llama
 ##### Spacy  
 Esta librería de análisis de texto está más especializado en el desarrollo, así que la producción de aplicaciones es sencilla y la adecuada para este tipo de proyectos.    
 Para datos en español:  
-`import spacy  
-from spacy.lang.es.examples import sentences  
-nlp = spacy.load('es_core_news_sm')
-doc = nlp(sentences[0])
-print(doc.text)
-for token in doc:
-    print(token.text, token.pos_, token.dep_)`
+`import spacy`    
+`from spacy.lang.es.examples import sentences`    
+`nlp = spacy.load('es_core_news_sm')`  
+`doc = nlp(sentences[0])`  
+`print(doc.text)`  
+`for token in doc:`  
+`    print(token.text, token.pos_, token.dep_)`
 
 Para la tokenización y el análisis semántico
-`import spacy
-
+`import spacy`  
 nlp = spacy.load('es_core_web_sm')
 doc = nlp(u'Texto a analizar')
 
