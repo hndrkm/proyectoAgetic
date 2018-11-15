@@ -51,7 +51,7 @@ sudo apt-get install libboost-regex-dev libicu-dev zlib1g-dev \
                      libboost-system-dev libboost-program-options-dev \  
                      libboost-thread-dev -yq  
 
-wget https://github.com/TALP-UPC/FreeLing/releases/download/4.0/freeling-4.0-trusty-amd64.deb   sudo gdebi -n freeling-4.0-trusty-amd64.deb  
+wget https://github.com/TALP-UPC/FreeLing/releases/download/4.0/freeling-4.0-trusty-amd64.deb   sudo gdebi -n freeling-4.0-trusty-amd64.deb   
 
 
 Para probarlo, necesitamos conocer la ubicación de los archivos de configuración:  
@@ -67,44 +67,33 @@ $ echo "Abuelas encontró al nieto número 114" | analyze -f \
 
 
 Nuestro output será:  
-´{
-  "id": "1",
-  "tokens": [
+´{  
+  "id": "1",  
+  "tokens": [  
     {
-      "id": "t1.1",
-      "form": "Abuelas",
-      "lemma": "abuelas",
-      "tag": "NP00SP0",
-      "ctag": "NP",
-      "pos": "noun",
-      "type": "proper",
-      "neclass": "person",
-      "nec": "PER"
-    },
-    {
-      "id": "t1.2",
-      "form": "encontr\u00f3",
-      "lemma": "encontrar",
-      "tag": "VMIS3S0",
-      "ctag": "VMI",
-      "pos": "verb",
-      "type": "main",
-      "mood": "indicative",
-      "tense": "past",
-      "person": "3",
-      "num": "singular"
-    },
-    {
-      "id": "t1.3",
-      "form": "a",
-      "lemma": "a",
+      "id": "t1.2",  
+      "form": "encontr\u00f3",  
+      "lemma": "encontrar",  
+      "tag": "VMIS3S0",  
+      "ctag": "VMI",  
+      "pos": "verb",  
+      "type": "main",  
+      "mood": "indicative",  
+      "tense": "past",  
+      "person": "3",  
+      "num": "singular"  
+    },  
+    {  
+      "id": "t1.3",  
+      "form": "a",  
+      "lemma": "a",  
       "tag": "SP",
       "ctag": "SP",
       "pos": "adposition",
       "type": "preposition"
-    },
-    {
-      "id": "t1.4",
+    },  
+    {  
+      "id": "t1.4",  
       "form": "el",
       "lemma": "el",
       "tag": "DA0MS0",
@@ -126,54 +115,54 @@ Nuestro output será:
       "num": "singular"
     },
     {
-      "id": "t1.6",
-      "form": "n\u00famero",
-      "lemma": "n\u00famero",
-      "tag": "NCMS000",
-      "ctag": "NC",
-      "pos": "noun",
-      "type": "common",
-      "gen": "masculine",
-      "num": "singular"
-    },
-    {
-      "id": "t1.7",
-      "form": "114",
-      "lemma": "114",
-      "tag": "Z",
-      "ctag": "Z",
-      "pos": "number"
-    }
-  ]
+      "id": "t1.6",  
+      "form": "n\u00famero",  
+      "lemma": "n\u00famero",  
+      "tag": "NCMS000",  
+      "ctag": "NC",  
+      "pos": "noun",  
+      "type": "common",  
+      "gen": "masculine",  
+      "num": "singular"  
+    },  
+    {   
+      "id": "t1.7",  
+      "form": "114",  
+      "lemma": "114",  
+      "tag": "Z",  
+      "ctag": "Z",  
+      "pos": "number"  
+    }  
+  ]  
 }´  
 
 
-En este caso el resultado está en formato JSON.
-Análisis de entidades
-Una vez que tenemos los workers listos podemos llamar a freeling con:
-from pyfreeling import Analyzer
+En este caso el resultado está en formato JSON.  
+Análisis de entidades  
+Una vez que tenemos los workers listos podemos llamar a freeling con:  
+from pyfreeling import Analyzer  
 
-´def tokenize(data):
-    try:
-        analyzer = Analyzer(config='/usr/share/freeling/config/es-ar.cfg')
-        tokens = []
-        xml_root = analyzer.run(data['parsedText'].encode('utf-8'), 'nec')
-        for element in xml_root.iter():
-            if element.tag == 'token':
-                tokens.append(dict(element.attrib))
-    except Exception as e:
-        print(data['idTramite'])
-        print(e)
+´def tokenize(data):  
+    try:  
+        analyzer = Analyzer(config='/usr/share/freeling/config/es-ar.cfg')  
+        tokens = []  
+        xml_root = analyzer.run(data['parsedText'].encode('utf-8'), 'nec')  
+        for element in xml_root.iter():  
+            if element.tag == 'token':  
+                tokens.append(dict(element.attrib))  
+    except Exception as e:  
+        print(data['idTramite'])  
+        print(e)  
 
-    return {'idTramite': data['idTramite'], 'tokens': tokens}
-tokens = df.map(tokenize)´  
-
-
-Y luego bajamos todo a disco:
-tokens.map(ujson.dumps).to_textfiles('{}.*.dat'.format(filename))
+    return {'idTramite': data['idTramite'], 'tokens': tokens}  
+tokens = df.map(tokenize)´    
 
 
-Esta tarea toma varias horas y como resultado obtendremos algunos archivos llamados: file1.dat.0.dat, file1.dat.1.dat, etc. Y su contenido será similiar a:
+Y luego bajamos todo a disco:  
+tokens.map(ujson.dumps).to_textfiles('{}.*.dat'.format(filename))  
+
+
+Esta tarea toma varias horas y como resultado obtendremos algunos archivos llamados: file1.dat.0.dat, file1.dat.1.dat, etc. Y su contenido será similiar a:  
 ´{
   "idTramite": "100000",
   "tokens": [
@@ -199,12 +188,12 @@ Esta tarea toma varias horas y como resultado obtendremos algunos archivos llama
   },
   ...
   ]
-}´
-##### Spacy
-Esta librería de análisis de texto está más especializado en el desarrollo, así que la producción de aplicaciones es sencilla y la adecuada para este tipo de proyectos.  
-Para datos en español:
-import spacy
-from spacy.lang.es.examples import sentences
+}´  
+##### Spacy  
+Esta librería de análisis de texto está más especializado en el desarrollo, así que la producción de aplicaciones es sencilla y la adecuada para este tipo de proyectos.    
+Para datos en español:  
+import spacy  
+from spacy.lang.es.examples import sentences  
 nlp = spacy.load('es_core_news_sm')
 doc = nlp(sentences[0])
 print(doc.text)
@@ -244,16 +233,16 @@ for token1 in tokens:
 ### Generación de una estructura de datos para guardar datos semánticos obtenidos de un texto plano 
 #### Relaciones Semánticas
 Para la estructura de datos, se vio necesario tener un sistema de relaciones en las palabras de las oraciones y la oraciones de los textos para una búsqueda simple y rápida.
-var oraciones = db._create("oraciones");
-var palabras = db._create("palabras");
-var relacionesPalOra = db._createEdgeCollection("relacionesPalOra");
-var relText = db._create("relText");
-var Texto = db._create("Texto");
-var CPE =Texto.save({_key: "CPE", title:'', creado:1999,tipo:''”})._id;
-var Bolivia =palabra.save({text,lema,pos,tag,dep,shape,alpha,stop})._id;
-var sentence1 = oraciones.save({text,lema,pos,tag})._id;
-relacionesPalOra.save(CPE, Bolivia, {roles: ["rol"]});
- relText.save(sentece1, Bolivia, {roles: [""]});
+var oraciones = db._create("oraciones");  
+var palabras = db._create("palabras");  
+var relacionesPalOra = db._createEdgeCollection("relacionesPalOra");  
+var relText = db._create("relText");  
+var Texto = db._create("Texto");  
+var CPE =Texto.save({_key: "CPE", title:'', creado:1999,tipo:''”})._id;  
+var Bolivia =palabra.save({text,lema,pos,tag,dep,shape,alpha,stop})._id;  
+var sentence1 = oraciones.save({text,lema,pos,tag})._id;  
+relacionesPalOra.save(CPE, Bolivia, {roles: ["rol"]});  
+ relText.save(sentece1, Bolivia, {roles: [""]});  
 #### Palabras incrustadas o vectores de palabras.
 Se guardarán como archivos .bin o .vec de cada documento.
 ### Almacenamiento de los datos generados  
@@ -264,19 +253,19 @@ Grafeno
 Biblioteca de Python para la extracción de gráficos conceptuales de texto, operación y linealización. Se proporciona un servicio web integrado.
 Esta biblioteca sigue siendo un trabajo en progreso, pero ya ha demostrado ser útil para varias aplicaciones, por ejemplo, el resumen de texto extractivo.
 Requerimientos
-python > = 3.4
-Los paquetes de Python para el uso de la biblioteca se enumeran en requirements.txt. Recomendamos utilizar conda para instalar grafeno y sus dependencias en un entorno virtual.
-Un analizador de dependencia. Por ahora, los siguientes son compatibles:
-spaCy (recomendado)
-freeling
-Si usa el simplenlglinealizador, un javaejecutable tendrá que estar disponible.
-También puede necesitar algunos datos NLTK, por ejemplo, 'wordnet' y 'wordnet_ic'. Se pueden descargar en python con:
-importar nltk
-nltk.download ([ ' wordnet ' , ' wordnet_ic ' ])
+python > = 3.4  
+Los paquetes de Python para el uso de la biblioteca se enumeran en requirements.txt. Recomendamos utilizar conda para instalar grafeno y sus dependencias en un entorno virtual.  
+Un analizador de dependencia. Por ahora, los siguientes son compatibles:  
+spaCy (recomendado)  
+freeling  
+Si usa el simplenlglinealizador, un javaejecutable tendrá que estar disponible.  
+También puede necesitar algunos datos NLTK, por ejemplo, 'wordnet' y 'wordnet_ic'. Se pueden descargar en python con:  
+importar nltk  
+nltk.download ([ ' wordnet ' , ' wordnet_ic ' ])  
 
 
-### Extractor de información en forma de resumen de texto 
-Para esta tarea se reviso el repositorio https://github.com/icoxfog417/awesome-text-summarization
+### Extractor de información en forma de resumen de texto   
+Para esta tarea se reviso el repositorio https://github.com/icoxfog417/awesome-text-summarization  
  el cual explica el proceso de resumenes automaticos de texto, como tambien el siguiente repositorio https://github.com/facebookarchive/NAMAS. Como un apoyo a la documentacion el repositorio https://github.com/icoxfog417/awesome-text-summarization esmuy util.
 
 
