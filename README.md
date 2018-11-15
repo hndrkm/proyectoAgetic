@@ -67,9 +67,9 @@ $ echo "Abuelas encontró al nieto número 114" | analyze -f \
 
 
 Nuestro output será:  
-`{  
-  "id": "1",  
-  "tokens": [  
+`{`  
+  `"id": "1",`  
+  `"tokens": [  
     {
       "id": "t1.2",  
       "form": "encontr\u00f3",  
