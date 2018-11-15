@@ -7,6 +7,7 @@ Es una herramienta completa tanto para la investigación como la producción que
 #### Chatbot con ai y npl
 https://github.com/alfredfrancis/ai-chatbot-framework/  
 La herramienta ofrece una implementación rápida para la generación de una interfaz conversacional esto para facilitar la implantación, pero el problema encontrado es su difícil integración de un aprendizaje basado en documentos largos ya que los modelos que presenta evalúan textos cortos como las conversaciones de un chat.  
+
 ------------------------
 Los pasos o módulos sugeridos para el desarrollo son:
 ### Procesamiento de lenguaje natural  
@@ -28,73 +29,74 @@ Para palabras sueltas
 `$ echo "leyes" | ./fasttext print-word-vectors result/fil9.bin`
 Para palabras continuas
 `$ ./fasttext nn result/fil9.bin`  
-Pre-computing word vectors... done.´
+`Pre-computing word vectors... done.`
 un ejemplo de salida es el siguiente
-´Query word? asparagus´
-´beetroot 0.812384´
-´tomato 0.806688´
-´horseradish 0.805928´
-´spinach 0.801483´
-´licorice 0.791697´
-´lingonberries 0.781507´
-´asparagales 0.780756´
-´lingonberry 0.778534´
-´celery 0.774529´
-´beets 0.773984´  
+`Query word? asparagus`
+`beetroot 0.812384`
+`tomato 0.806688`
+`horseradish 0.805928`
+`spinach 0.801483`
+`licorice 0.791697`
+`lingonberries 0.781507`
+`asparagales 0.780756`
+`lingonberry 0.778534`
+`celery 0.774529`
+`beets 0.773984`  
 ##### Freeling
 Para freeling empezamos con   
-sudo apt-get update -yq  
-sudo apt-get install gdebi -yq  
-sudo apt-get install libboost-regex-dev libicu-dev zlib1g-dev \  
-                     libboost-system-dev libboost-program-options-dev \  
-                     libboost-thread-dev -yq  
+`sudo apt-get update -yq`  
+`sudo apt-get install gdebi -yq`  
+`sudo apt-get install libboost-regex-dev libicu-dev zlib1g-dev \`  
+`                     libboost-system-dev libboost-program-options-dev \`  
+`                     libboost-thread-dev -yq`  
 
-wget https://github.com/TALP-UPC/FreeLing/releases/download/4.0/freeling-4.0-trusty-amd64.deb   sudo gdebi -n freeling-4.0-trusty-amd64.deb   
+`wget https://github.com/TALP-UPC/FreeLing/releases/download/4.0/freeling-4.0-trusty-amd64.deb   sudo gdebi -n freeling-4.0-trusty-amd64.deb`   
 
 
 Para probarlo, necesitamos conocer la ubicación de los archivos de configuración:  
 + En Debian: /usr/share/freeling/config/  
+
 Luego podemos ejecutar:  
-$ export FREELINGSHARE=/usr/local/Cellar/freeling/4.0/share/freeling/  
-$ echo "Hola mundo" | analyzer -f /usr/local/Cellar/freeling/4.0/share/freeling/config/es.cfg  
-Hola hola I 1  
-mundo mundo NCMS000 1  
+`$ export FREELINGSHARE=/usr/local/Cellar/freeling/4.0/share/freeling/`  
+`$ echo "Hola mundo" | analyzer -f /usr/local/Cellar/freeling/4.0/share/freeling/config/es.cfg`  
+`Hola hola I 1`  
+`mundo mundo NCMS000 1`  
 Y, como en este caso queremos el módulo nec de named entity classification, tendremos que correr:  
-$ echo "Abuelas encontró al nieto número 114" | analyze -f \  
-/usr/local/Cellar/freeling/4.0/share/freeling/config/es.cfg --nec --output json  
+`$ echo "Abuelas encontró al nieto número 114" | analyze -f \`  
+`/usr/local/Cellar/freeling/4.0/share/freeling/config/es.cfg --nec --output json`  
 
 
 Nuestro output será:  
 `{`  
   `"id": "1",`  
-  `"tokens": [  
-    {
-      "id": "t1.2",  
-      "form": "encontr\u00f3",  
-      "lemma": "encontrar",  
-      "tag": "VMIS3S0",  
-      "ctag": "VMI",  
-      "pos": "verb",  
-      "type": "main",  
-      "mood": "indicative",  
-      "tense": "past",  
-      "person": "3",  
-      "num": "singular"  
-    },  
-    {  
-      "id": "t1.3",  
-      "form": "a",  
-      "lemma": "a",  
-      "tag": "SP",
-      "ctag": "SP",
-      "pos": "adposition",
-      "type": "preposition"
-    },  
-    {  
-      "id": "t1.4",  
-      "form": "el",
-      "lemma": "el",
-      "tag": "DA0MS0",
+  `"tokens": [`  
+    `{`
+      `"id": "t1.2",`  
+      `"form": "encontr\u00f3",`  
+      `"lemma": "encontrar",`  
+      `"tag": "VMIS3S0",`  
+      `"ctag": "VMI",`  
+      `"pos": "verb",`  
+      `"type": "main",`  
+      `"mood": "indicative",`  
+      `"tense": "past",`  
+      `"person": "3",`  
+      `"num": "singular"`  
+    `},`  
+    `{`  
+      `"id": "t1.3",`  
+      `"form": "a",`  
+      `"lemma": "a",`  
+      `"tag": "SP",`
+      `"ctag": "SP",`
+      `"pos": "adposition",`
+      `"type": "preposition"`
+    `},`  
+    `{`  
+      `"id": "t1.4",`  
+      `"form": "el",`
+      `"lemma": "el",`
+      `"tag": "DA0MS0",`
       "ctag": "DA",
       "pos": "determiner",
       "type": "article",
@@ -268,4 +270,3 @@ Para esta tarea se reviso el repositorio https://github.com/icoxfog417/awesome-t
 Para mas informacion
 https://eprints.ucm.es/48879/1/100.pdf
 http://scielo.sld.cu/scielo.php?script=sci_arttext&pid=S2227-18992013000100007  
-
